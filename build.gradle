@@ -1,6 +1,8 @@
 plugins {
     id "com.netflix.nebula.netflixoss" version "11.3.1"
     id "me.champeau.jmh" version "0.7.1"
+    id 'com.adarshr.test-logger' version '4.0.0'
+    id 'com.teedo.test-metrics' version '1.0.0'
 }
 
 allprojects {
@@ -12,8 +14,14 @@ allprojects {
 subprojects {
     apply plugin: 'nebula.netflixoss'
     apply plugin: 'java-library'
+    apply plugin: 'com.adarshr.test-logger'
+    apply plugin: 'com.teedo.test-metrics'
 
     group = "com.netflix.hystrix"
+
+    testMetrics {
+        url = "http://localhost:8080/metrics"
+    }
 
     tasks.withType(Javadoc).configureEach {
         failOnError = false
